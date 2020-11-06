@@ -1,6 +1,5 @@
 node_modules
 .env
-rawNames.json
 server/functions/*
 .firebaserc
 firebase.json
