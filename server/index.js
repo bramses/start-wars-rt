@@ -3,7 +3,6 @@ require("dotenv").config();
 const { workflow, fetchSet } = require("./usernames");
 const express = require("express");
 
-
 var app = express();
 var cors = require("cors");
 app.use(cors());
@@ -25,6 +24,7 @@ const client = Twitter(secrets);
 const TWITTER_ID = "1324718084591095808";
 
 const getNewIDs = async () => {
+  console.log(`fetching rts from Twitter`)
   var params = { id: TWITTER_ID, count: "100" };
   try {
     const results = await client.get("statuses/retweets/", params);
@@ -39,6 +39,7 @@ const getNewIDs = async () => {
 };
 
 const getQuoteTweets = async () => {
+  console.log(`fetching quote tweets from Twitter`)
   var params = { q: TWITTER_ID, count: "100" };
   try {
     const results = await client.get("search/tweets/", params);
@@ -52,8 +53,10 @@ const getQuoteTweets = async () => {
     console.error(error);
   }
 };
+let favs;
 
 const getFavorites = async () => {
+  console.log(`fetching favorite count from Twitter`)
   var params = { id: TWITTER_ID };
   try {
     const result = await client.get("statuses/show/", params);
@@ -66,11 +69,15 @@ const getFavorites = async () => {
 
 const TIMEOUT = 30000;
 
+favs = getFavorites();
 getNewIDs();
 getQuoteTweets();
 
 setInterval(getNewIDs, TIMEOUT);
 setInterval(getQuoteTweets, TIMEOUT);
+setInterval(() => {
+  favs = getFavorites();
+}, TIMEOUT);
 
 app.get("/ids", (req, res) => {
   try {
@@ -83,8 +90,7 @@ app.get("/ids", (req, res) => {
 
 app.get("/likes", async (req, res) => {
   try {
-    const likes = await getFavorites();
-    res.json({ likes: likes });
+    res.json({ likes: favs });
   } catch (error) {
     res.json({ likes: null });
   }

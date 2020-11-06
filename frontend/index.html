@@ -91,8 +91,8 @@
     <section class="star-wars">
       <div class="crawl">
         <div class="title">
-          <h1 id="rt_count">RT Total = 3</h1>
-          <h1>(refreshes every 30s)</h1>
+          <h1 id="rt_count">LOADING</h1>
+          <h1>(refreshes every 30secs)</h1>
         </div>
 
         <div id="rters"></div>
@@ -100,8 +100,8 @@
     </section>
     <div class="front">
       <span id="madeBy"
-        >built by <a href="https://twitter.com/_bramses">@_bramses</a><br />
-        JOIN THE LIST
+        >built by <a href="https://twitter.com/_bramses" style="color: white;">@_bramses</a><br />
+        <a href="https://twitter.com/iamdevloper/status/1324718084591095808" style="color: white;">JOIN THE LIST</a>
       </span>
     </div>
     <script>
@@ -135,6 +135,7 @@
           .then((response) => response.json())
           .then((data) => {
             rtDiv.innerHTML = generatePTags(data.ids);
+            console.log(`rts total: ${data.ids.length}`)
             rtCountH1.innerHTML = changeCount(data.ids.length);
           });
       }
@@ -143,7 +144,7 @@
         fetch("https://start-wars-rt-hb82b.ondigitalocean.app/api/likes")
           .then((response) => response.json())
           .then((data) => {
-            console.log(data.likes)
+            console.log(`likes count: ${data.likes}`)
             recountStars(data.likes)
           });
       }
