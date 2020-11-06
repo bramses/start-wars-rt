@@ -131,7 +131,7 @@
       }
 
       function getIDs() {
-        fetch(" https://us-central1-star-wars-rt-server.cloudfunctions.net/app/ids")
+        fetch("http://localhost:8080/ids")
           .then((response) => response.json())
           .then((data) => {
             rtDiv.innerHTML = generatePTags(data.ids);
@@ -140,7 +140,7 @@
       }
 
       function getLikes() {
-        fetch(" https://us-central1-star-wars-rt-server.cloudfunctions.net/app/likes")
+        fetch("http://localhost:8080/likes")
           .then((response) => response.json())
           .then((data) => {
             console.log(data.likes)
