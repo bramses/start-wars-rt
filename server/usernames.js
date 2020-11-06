@@ -30,7 +30,9 @@ const fetchSet = () => {
 const workflow = (newHandles) => {
   try {
     namesSet = readFromFile(filename);
+    let oldLen = namesSet.size;
     namesSet = modifyNames(newHandles);
+    console.log(`writing name set with current length = ${namesSet.size} and previous length = ${oldLen} to ${filename}`)
     writeToFile(namesSet, filename);
     return namesSet;
   } catch (error) {

@@ -22,7 +22,7 @@ const secrets = {
 };
 
 const client = Twitter(secrets);
-const TWITTER_ID = "1321293718389985283";
+const TWITTER_ID = "1324718084591095808";
 
 const getNewIDs = async () => {
   var params = { id: TWITTER_ID, count: "100" };
