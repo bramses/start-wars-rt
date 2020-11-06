@@ -61,6 +61,7 @@ const getFavorites = async () => {
   try {
     const result = await client.get("statuses/show/", params);
     let favCount = result.favorite_count;
+    favs = favCount;
     return favCount;
   } catch (error) {
     console.error(error);
@@ -69,14 +70,15 @@ const getFavorites = async () => {
 
 const TIMEOUT = 30000;
 
-favs = getFavorites();
+getFavorites().then((res) => favs = res)
 getNewIDs();
 getQuoteTweets();
 
 setInterval(getNewIDs, TIMEOUT);
 setInterval(getQuoteTweets, TIMEOUT);
-setInterval(() => {
-  favs = getFavorites();
+setInterval(async () => {
+  favs = await getFavorites();
+  console.log(`favs ${favs}`)
 }, TIMEOUT);
 
 app.get("/ids", (req, res) => {
@@ -90,6 +92,7 @@ app.get("/ids", (req, res) => {
 
 app.get("/likes", async (req, res) => {
   try {
+    console.log(`# of favs: ${favs}`)
     res.json({ likes: favs });
   } catch (error) {
     res.json({ likes: null });

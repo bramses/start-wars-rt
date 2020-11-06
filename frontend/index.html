@@ -130,8 +130,10 @@
         }
       }
 
+      // https://start-wars-rt-hb82b.ondigitalocean.app/api/
+
       function getIDs() {
-        fetch("https://start-wars-rt-hb82b.ondigitalocean.app/api/ids")
+        fetch("http://localhost:8080/ids")
           .then((response) => response.json())
           .then((data) => {
             rtDiv.innerHTML = generatePTags(data.ids);
@@ -141,10 +143,10 @@
       }
 
       function getLikes() {
-        fetch("https://start-wars-rt-hb82b.ondigitalocean.app/api/likes")
+        fetch("http://localhost:8080/likes")
           .then((response) => response.json())
           .then((data) => {
-            console.log(`likes count: ${data.likes}`)
+            console.log(`likes count: ${JSON.stringify(data.likes)}`)
             recountStars(data.likes)
           });
       }
