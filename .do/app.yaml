@@ -1,0 +1,21 @@
+name: start-wars-rt
+
+static_sites:
+- name: frontend
+  github:
+    repo: bramses/start-wars-rt
+    branch: main
+    deploy_on_push: true
+  source_dir: frontend
+  routes:
+  - path: /
+
+services:
+- name: backend
+  github:
+    repo: bramses/start-wars-rt
+    branch: main
+    deploy_on_push: true
+  source_dir: server
+  routes:
+  - path: /api

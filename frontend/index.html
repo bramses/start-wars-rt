@@ -131,7 +131,7 @@
       }
 
       function getIDs() {
-        fetch("http://localhost:8888/ids")
+        fetch(" https://us-central1-star-wars-rt-server.cloudfunctions.net/app/ids")
           .then((response) => response.json())
           .then((data) => {
             rtDiv.innerHTML = generatePTags(data.ids);
@@ -140,7 +140,7 @@
       }
 
       function getLikes() {
-        fetch("http://localhost:8888/likes")
+        fetch(" https://us-central1-star-wars-rt-server.cloudfunctions.net/app/likes")
           .then((response) => response.json())
           .then((data) => {
             console.log(data.likes)
@@ -185,6 +185,7 @@
 
       rtDiv.innerHTML = generatePTags(names);
       rtCountH1.innerHTML = changeCount(names.length);
+      recountStars(9000);
     </script>
   </body>
 </html>
