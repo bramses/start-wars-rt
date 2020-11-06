@@ -1,6 +1,8 @@
 const fs = require("fs");
 let namesSet = new Set();
 const filename = "rawNames.json";
+var Filter = require('bad-words'),
+    filter = new Filter();
 
 const writeToFile = (namesSet, filename) => {
   let data = JSON.stringify(Array.from(namesSet));
@@ -15,14 +17,14 @@ const readFromFile = (filename) => {
 
 const modifyNames = (newNames) => {
   for (let i = 0; i < newNames.length; i++) {
-    namesSet.add(newNames[i]);
+    namesSet.add(filter.clean(newNames[i]));
   }
 
   return namesSet;
 };
 
 const fetchSet = () => {
-  return readFromFile(filename);
+  return Array.from(readFromFile(filename));
 };
 
 const workflow = (newHandles) => {

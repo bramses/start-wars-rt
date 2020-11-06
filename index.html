@@ -101,41 +101,56 @@
     <div class="front">
       <span id="madeBy"
         >built by <a href="https://twitter.com/_bramses">@_bramses</a><br />
-        <a
-          href="https://twitter.com/intent/tweet?button_hashtag=DayInOurLives&ref_src=twsrc%5Etfw"
-          class="twitter-hashtag-button"
-          data-text=" A day in the life...of everyone!"
-          data-url="https://www.dayinourlives.com "
-          data-related="_bramses"
-          data-show-count="false"
-          >JOIN THE CREDITS</a
-        >
-        <script
-          async
-          src="https://platform.twitter.com/widgets.js"
-          charset="utf-8"
-        ></script>
+        JOIN THE LIST
       </span>
     </div>
     <script>
+      var rtCountH1 = document.getElementById("rt_count");
+      const changeCount = (count) =>
+        `<h1 id="rt_count">RT Total = ${count}</h1>`;
+      let stars = 0;
+
       function getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
       }
       var canvas = document.getElementById("starfield"),
         context = canvas.getContext("2d"),
-        stars = 9000,
         colorrange = [0, 60, 240];
-      for (var i = 0; i < stars; i++) {
-        var x = Math.random() * canvas.offsetWidth;
-        (y = Math.random() * canvas.offsetHeight),
-          (radius = Math.random() * 1.2),
-          (hue = colorrange[getRandom(0, colorrange.length - 1)]),
-          (sat = getRandom(50, 100));
-        context.beginPath();
-        context.arc(x, y, radius, 0, 360);
-        context.fillStyle = "hsl(" + hue + ", " + sat + "%, 88%)";
-        context.fill();
+      function recountStars(stars) {
+        for (var i = 0; i < stars; i++) {
+          var x = Math.random() * canvas.offsetWidth;
+          (y = Math.random() * canvas.offsetHeight),
+            (radius = Math.random() * 1.2),
+            (hue = colorrange[getRandom(0, colorrange.length - 1)]),
+            (sat = getRandom(50, 100));
+          context.beginPath();
+          context.arc(x, y, radius, 0, 360);
+          context.fillStyle = "hsl(" + hue + ", " + sat + "%, 88%)";
+          context.fill();
+        }
       }
+
+      function getIDs() {
+        fetch("http://localhost:8888/ids")
+          .then((response) => response.json())
+          .then((data) => {
+            rtDiv.innerHTML = generatePTags(data.ids);
+            rtCountH1.innerHTML = changeCount(data.ids.length);
+          });
+      }
+
+      function getLikes() {
+        fetch("http://localhost:8888/likes")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.likes)
+            recountStars(data.likes)
+          });
+      }
+
+      getLikes();
+      getIDs();
+
       function shuffle(array) {
         var currentIndex = array.length,
           temporaryValue,
@@ -169,10 +184,7 @@
       };
 
       rtDiv.innerHTML = generatePTags(names);
-
-      var rtCountH1 = document.getElementById('rt_count');
-      const changeCount = (count) => `<h1 id="rt_count">RT Total = ${count}</h1>`
-      rtCountH1.innerHTML = changeCount(names.length)
+      rtCountH1.innerHTML = changeCount(names.length);
     </script>
   </body>
 </html>
