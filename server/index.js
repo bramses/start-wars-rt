@@ -21,7 +21,7 @@ const secrets = {
 };
 
 const client = Twitter(secrets);
-const TWITTER_ID = "1324718084591095808";
+const TWITTER_ID = "1324783097804673030";
 
 const getNewIDs = async () => {
   console.log(`fetching rts from Twitter`)
